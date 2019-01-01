@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace XPlatform
@@ -39,6 +40,23 @@ namespace XPlatform
             _VM.MainTitle = "Main Title " + ClickCount.ToString();
 
             Navigation.PushModalAsync(new PhotoBuilder());
+
+        }
+
+        private void ContentPage_SizeChanged(object sender, EventArgs e)
+        {
+
+
+            string visualState = Width > Height ? "Landscape" : "Portrait";
+            VisualStateManager.GoToState(mainStack, visualState);
+            //VisualStateManager.GoToState(menuScroll, visualState);
+            //VisualStateManager.GoToState(menuStack, visualState);
+
+            //foreach (View child in menuStack.Children)
+            //{
+            //    VisualStateManager.GoToState(child, visualState);
+            //}
+
 
         }
     }

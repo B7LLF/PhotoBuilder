@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:XPlatform"
              x:Class="XPlatform.MainPage"
+             SizeChanged="ContentPage_SizeChanged"
              >
 
 
@@ -25,9 +26,30 @@
         <Label Grid.Row="1" Text="{Binding MainTitle}"  
            VerticalOptions="Center" 
            HorizontalOptions="Center" />
-        
-        <Button Grid.Row="2" Clicked="OnButtonClicked" Text="B1" ></Button>
-        <Button Grid.Row="3" Command="{Binding FirstCommand}" Text="B2" ></Button>
+
+
+        <StackLayout x:Name="mainStack" Grid.Row="2">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup Name="OrientationStates">
+
+                    <VisualState Name="Portrait">
+                        <VisualState.Setters>
+                            <Setter Property="Orientation" Value="Vertical" />
+                        </VisualState.Setters>
+                    </VisualState>
+
+                    <VisualState Name="Landscape">
+                        <VisualState.Setters>
+                            <Setter Property="Orientation" Value="Horizontal" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
+            <Button Grid.Row="2" Clicked="OnButtonClicked" Text="B1" ></Button>
+            <Button Grid.Row="3" Command="{Binding FirstCommand}" Text="B2" ></Button>
+
+        </StackLayout>
 
     </Grid>
 	
