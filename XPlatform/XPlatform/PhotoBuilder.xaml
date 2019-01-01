@@ -56,16 +56,16 @@
 
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="pickPictureButton1" Text="Pick Photo 1"  Grid.Row="1" Grid.Column="1"></Button>
+                <Button x:Name="pickPictureButton1" Text="Pick Photo 1" Command="{Binding GetImage1}" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding pickPictureButton1Enabled}" ></Button>
 
                 <Image Grid.Row="3" Grid.Column="1" Source="{Binding Image1}"></Image>
 
 
-                <Button x:Name="pickPictureButton2" Text="Pick Photo 2"  Grid.Row="1" Grid.Column="3"></Button>
+                <Button x:Name="pickPictureButton2" Text="Pick Photo 2"  Grid.Row="1" Grid.Column="3" Command="{Binding GetImage2}" IsEnabled="{Binding pickPictureButton2Enabled}" ></Button>
 
                 <Image Grid.Row="3" Grid.Column="3" Source="{Binding Image2}"></Image>
 
-                <Button x:Name="pickPictureButton3" Text="Pick Photo 3"  Grid.Row="1" Grid.Column="5"></Button>
+                <Button x:Name="pickPictureButton3" Text="Pick Photo 3"  Grid.Row="1" Grid.Column="5" Command="{Binding GetImage3}" IsEnabled="{Binding pickPictureButton3Enabled}"></Button>
 
                 <Image Grid.Row="3" Grid.Column="5" Source="{Binding Image3}"></Image>
 

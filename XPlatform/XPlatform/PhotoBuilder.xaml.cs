@@ -69,6 +69,133 @@ namespace XPlatform
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image3)));
             }
         }
+
+        public Command GetImage1
+        {
+            get
+            {
+                return new Command(param => GetImage(1)); 
+            }
+        }
+
+        public Command GetImage2
+        {
+            get
+            {
+                return new Command(param => GetImage(2));
+            }
+        }
+
+        public Command GetImage3
+        {
+            get
+            {
+                return new Command(param => GetImage(3));
+            }
+        }
+
+
+        async void GetImage(int imageIndex)
+        {
+            pickPictureButton1Enabled = false;
+            Stream stream = await DependencyService.Get<IPicturePicker>().GetImageStreamAsync();
+
+            if (stream != null)
+            {
+                Image image = new Image
+                {
+                    Source = ImageSource.FromStream(() => stream),
+                    BackgroundColor = Color.Gray
+                };
+
+                TapGestureRecognizer recognizer = new TapGestureRecognizer();
+                recognizer.Tapped += (sender2, args) =>
+                {
+                    //(this as ContentPage).Content = image;
+                    switch (imageIndex)
+                    {
+                        case 1:
+                            Image1 = image.Source;
+                            pickPictureButton1Enabled = true;
+                            break;
+
+                        case 2:
+                            Image2 = image.Source;
+                            pickPictureButton2Enabled = true;
+                            break;
+
+                        case 3:
+                            Image3 = image.Source;
+                            pickPictureButton3Enabled = true;
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                };
+
+
+                image.GestureRecognizers.Add(recognizer);
+
+                //(this as ContentPage).Content = image;
+                
+                switch (imageIndex)
+                {
+                    case 1:
+                        Image1 = image.Source;
+                        pickPictureButton1Enabled = true;
+                        break;
+
+                    case 2:
+                        Image2 = image.Source;
+                        pickPictureButton2Enabled = true;
+                        break;
+
+                    case 3:
+                        Image3 = image.Source;
+                        pickPictureButton3Enabled = true;
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+            }
+            else
+            {
+                switch (imageIndex)
+                {
+                    case 1:
+                        pickPictureButton1Enabled = true;
+                        break;
+
+                    case 2:
+                        pickPictureButton2Enabled = true;
+                        break;
+
+                    case 3:
+                        pickPictureButton3Enabled = true;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+        public bool _pickPictureButton1Enabled =true;
+        public bool pickPictureButton1Enabled { get { return _pickPictureButton1Enabled; } set { _pickPictureButton1Enabled = value;PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(pickPictureButton1Enabled))); } }
+
+        public bool _pickPictureButton2Enabled = true;
+        public bool pickPictureButton2Enabled { get { return _pickPictureButton2Enabled; } set { _pickPictureButton2Enabled = value; PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(pickPictureButton2Enabled))); } }
+
+        public bool _pickPictureButton3Enabled = true;
+        public bool pickPictureButton3Enabled { get { return _pickPictureButton3Enabled; } set { _pickPictureButton3Enabled = value; PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(pickPictureButton3Enabled))); } }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 
@@ -83,106 +210,6 @@ namespace XPlatform
             _vm = (PhotoBuilderDataModel)this.BindingContext;
             _vm.BackCommand += (s1,e1) => { Navigation.PopModalAsync(); };
 
-
-
-            pickPictureButton1.Clicked += async (sender, e) =>
-            {
-                pickPictureButton1.IsEnabled = false;
-                Stream stream = await DependencyService.Get<IPicturePicker>().GetImageStreamAsync();
-
-                if (stream != null)
-                {
-                    Image image = new Image
-                    {
-                        Source = ImageSource.FromStream(() => stream),
-                        BackgroundColor = Color.Gray
-                    };
-
-                    TapGestureRecognizer recognizer = new TapGestureRecognizer();
-                    recognizer.Tapped += (sender2, args) =>
-                    {
-                        //(this as ContentPage).Content = image;
-                        _vm.Image1 = image.Source;
-                        pickPictureButton1.IsEnabled = true;
-                    };
-                    image.GestureRecognizers.Add(recognizer);
-
-                    //(this as ContentPage).Content = image;
-                    _vm.Image1 = image.Source;
-                }
-                else
-                {
-                    pickPictureButton1.IsEnabled = true;
-                }
-            };
-
-
-            pickPictureButton2.Clicked += async (sender, e) =>
-            {
-                pickPictureButton2.IsEnabled = false;
-                Stream stream = await DependencyService.Get<IPicturePicker>().GetImageStreamAsync();
-
-                if (stream != null)
-                {
-                    Image image = new Image
-                    {
-                        Source = ImageSource.FromStream(() => stream),
-                        BackgroundColor = Color.Gray
-                    };
-
-                    TapGestureRecognizer recognizer = new TapGestureRecognizer();
-                    recognizer.Tapped += (sender2, args) =>
-                    {
-                        //(this as ContentPage).Content = image;
-                        _vm.Image2 = image.Source;
-                        pickPictureButton2.IsEnabled = true;
-                    };
-                    image.GestureRecognizers.Add(recognizer);
-
-                    //(this as ContentPage).Content = image;
-                    _vm.Image2 = image.Source;
-                }
-                else
-                {
-                    pickPictureButton2.IsEnabled = true;
-                }
-            };
-
-            pickPictureButton3.Clicked += async (sender, e) =>
-            {
-                pickPictureButton3.IsEnabled = false;
-                Stream stream = await DependencyService.Get<IPicturePicker>().GetImageStreamAsync();
-
-                if (stream != null)
-                {
-                    Image image = new Image
-                    {
-                        Source = ImageSource.FromStream(() => stream),
-                        BackgroundColor = Color.Gray
-                    };
-
-                    TapGestureRecognizer recognizer = new TapGestureRecognizer();
-                    recognizer.Tapped += (sender2, args) =>
-                    {
-                        //(this as ContentPage).Content = image;
-                        _vm.Image3 = image.Source;
-                        pickPictureButton3.IsEnabled = true;
-                    };
-                    image.GestureRecognizers.Add(recognizer);
-
-                    //(this as ContentPage).Content = image;
-                    _vm.Image3 = image.Source;
-                }
-                else
-                {
-                    pickPictureButton3.IsEnabled = true;
-                }
-            };
-
-
         }
-
-
-
     }
 }
