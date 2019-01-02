@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Android.Graphics;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 using Xamarin.Forms;
 
@@ -13,14 +15,45 @@ namespace XPlatform
         { 
             FirstCommand = new Command(() =>{ OnButtonClicked();
 
-                
+            });
+
+            PhotoCommand=new Command( async ()=>{
+
+            //do the get photo stuff
+            Image stream = await DependencyService.Get<IPicturePicker>().GetPhotoStreamAsync();
+
+                if (stream != null)
+                {
+                    Image image = new Image();
+
+                    image = stream;
+
+                    Image1 = image.Source;
+
+                }
+
 
             });
+
 
         }
 
 
-        public event EventHandler ButtonClicked;
+    private ImageSource _Image1;
+    public ImageSource Image1
+    {
+        get
+        {
+            return _Image1;
+        }
+        set
+        {
+            _Image1 = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image1)));
+        }
+    }
+
+    public event EventHandler ButtonClicked;
         protected void OnButtonClicked()
         {
             ButtonClicked?.Invoke(this, new EventArgs());
@@ -42,6 +75,8 @@ namespace XPlatform
 
         public Command FirstCommand { get;private set; }
 
+        public Command PhotoCommand { get; private set; }
+        
 
 
     }
