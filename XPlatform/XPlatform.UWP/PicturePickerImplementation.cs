@@ -41,5 +41,13 @@ namespace DependencyServiceSample.UWP
             IRandomAccessStreamWithContentType raStream = await storageFile.OpenReadAsync();
             return raStream.AsStreamForRead();
         }
+
+        public async Task<Image> GetPhotoStreamAsync()
+        {
+            
+                return null;
+            
+        }
+
     }
 }
