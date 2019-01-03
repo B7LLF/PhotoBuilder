@@ -7,8 +7,6 @@ namespace XPlatform
     public interface IPicturePicker
     {
         Task<Stream> GetImageStreamAsync();
-
-
         Task<Image> GetPhotoStreamAsync();
     }
 

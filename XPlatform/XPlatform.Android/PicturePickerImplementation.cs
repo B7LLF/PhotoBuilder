@@ -1,11 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-
 using Android.Content;
-
 using Xamarin.Forms;
-
 using DependencyServiceSample.Droid;
 using XPlatform.Droid;
 using XPlatform;
@@ -15,8 +12,9 @@ using Android.Provider;
 
 namespace DependencyServiceSample.Droid
 {
-    public class PicturePickerImplementation : IPicturePicker
+    public class PicturePickerImplementation : IPicturePicker 
     {
+
         public Task<Stream> GetImageStreamAsync()
         {
             // Define the Intent for getting images
@@ -26,6 +24,8 @@ namespace DependencyServiceSample.Droid
 
             // Get the MainActivity instance
             MainActivity activity = Forms.Context as MainActivity;
+
+            //MainActivity activity = (MainActivity)Android.App.Application.Context;
 
             // Start the picture-picker activity (resumes in MainActivity.cs)
             activity.StartActivityForResult(
@@ -45,19 +45,13 @@ namespace DependencyServiceSample.Droid
             // Define the Intent for getting images
             //Intent intent = new Intent();
             Intent intent = new Intent(MediaStore.ActionImageCapture);
-            //intent.SetType("image/*");
-            //intent.SetAction(Intent.ActionGetContent);
 
             // Get the MainActivity instance
             MainActivity activity = Forms.Context as MainActivity;
 
-            // Start the picture-picker activity (resumes in MainActivity.cs)
-            //activity.StartActivityForResult(
-            //    Intent.CreateChooser(intent, "Select Picture"),
-            //    MainActivity.PickImageId);
+            //MainActivity activity = (MainActivity)Android.App.Application.Context;
 
             activity.StartActivityForResult(intent, MainActivity.PickPhotoId);
-
 
             // Save the TaskCompletionSource object as a MainActivity property
             activity.PickPhotoTaskCompletionSource = new TaskCompletionSource<Image>();

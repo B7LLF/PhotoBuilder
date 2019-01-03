@@ -13,25 +13,29 @@ namespace XPlatform
 
         public MainMenuModel()
         { 
-            FirstCommand = new Command(() =>{ OnButtonClicked();
-
+            FirstCommand = new Command(() =>
+            {
+                OnButtonClicked();
             });
 
             PhotoCommand=new Command( async ()=>{
 
-            //do the get photo stuff
-            Image stream = await DependencyService.Get<IPicturePicker>().GetPhotoStreamAsync();
+                TakePhotoEnabled = false;
 
-                if (stream != null)
+                //do the get photo stuff
+                Image returnedImage = await DependencyService.Get<IPicturePicker>().GetPhotoStreamAsync();
+
+                if (returnedImage != null)
                 {
                     Image image = new Image();
 
-                    image = stream;
+                    image = returnedImage;
 
                     Image1 = image.Source;
 
                 }
 
+                TakePhotoEnabled = true;
 
             });
 
@@ -39,21 +43,21 @@ namespace XPlatform
         }
 
 
-    private ImageSource _Image1;
-    public ImageSource Image1
-    {
-        get
+        private ImageSource _Image1;
+        public ImageSource Image1
         {
-            return _Image1;
+            get
+            {
+                return _Image1;
+            }
+            set
+            {
+                _Image1 = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image1)));
+            }
         }
-        set
-        {
-            _Image1 = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image1)));
-        }
-    }
 
-    public event EventHandler ButtonClicked;
+        public event EventHandler ButtonClicked;
         protected void OnButtonClicked()
         {
             ButtonClicked?.Invoke(this, new EventArgs());
@@ -76,7 +80,9 @@ namespace XPlatform
         public Command FirstCommand { get;private set; }
 
         public Command PhotoCommand { get; private set; }
-        
+
+        private bool _TakePhotoEnabled =true;
+        public bool TakePhotoEnabled { get { return _TakePhotoEnabled; } set { _TakePhotoEnabled = value; OnPropertyChanged(nameof(TakePhotoEnabled)); } }
 
 
     }
