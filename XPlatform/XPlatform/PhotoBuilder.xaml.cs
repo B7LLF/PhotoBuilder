@@ -95,9 +95,43 @@ namespace XPlatform
         }
 
 
+        public Command GetImagePreview
+        {
+            get
+            {
+                return new Command(() => 
+                {
+                    //Greate a new image and add the other images if they exist.
+                    Image newimage = new Image();
+                    
+
+                });
+            }
+        }
+
+
+
         async void GetImage(int imageIndex)
         {
-            pickPictureButton1Enabled = false;
+
+            switch (imageIndex)
+            {
+                case 1:
+                    pickPictureButton1Enabled = false;
+                    break;
+
+                case 2:
+                    pickPictureButton2Enabled = false;
+                    break;
+
+                case 3:
+                    pickPictureButton3Enabled = false;
+                    break;
+
+                default:
+                    break;
+            }
+
             Stream stream = await DependencyService.Get<IPicturePicker>().GetImageStreamAsync();
 
             if (stream != null)
