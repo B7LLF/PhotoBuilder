@@ -44,10 +44,17 @@ namespace DependencyServiceSample.UWP
 
         public async Task<Image> GetPhotoStreamAsync()
         {
-            
-                return null;
-            
-        }
 
+            var raStream = await GetImageStreamAsync();
+
+            Image image = new Image
+            {
+                Source = ImageSource.FromStream(() => raStream),
+                BackgroundColor = Color.Gray
+            };
+
+            return image;
+
+        }
     }
 }
