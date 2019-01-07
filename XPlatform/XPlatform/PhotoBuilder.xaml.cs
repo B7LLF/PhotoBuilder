@@ -138,8 +138,25 @@ namespace XPlatform
 
                     }
 
-                    //b.(SKImageEncodeFormat.Png, 100);
+                    var x = SKImage.FromBitmap(b);
+                    //b.GetPixels()
 
+
+
+                    using (MemoryStream memStream = new MemoryStream())
+                    using (SKManagedWStream wstream = new SKManagedWStream(memStream))
+                    {
+                        b.Encode(wstream, SKEncodedImageFormat.Jpeg, (int)SKFilterQuality.High);
+                        byte[] data = memStream.ToArray();
+
+                        // Check the data array for content!
+
+                        Stream stream = new MemoryStream(data);
+                        ImageOut = ImageSource.FromStream(()=> { return stream; });
+
+
+                        // Check return value for success!
+                    }
 
                     //ImageOut = b;
 
