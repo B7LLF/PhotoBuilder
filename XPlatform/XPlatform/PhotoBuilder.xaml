@@ -44,6 +44,7 @@
                     <RowDefinition Height="10"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="10"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
 
 
                 </Grid.RowDefinitions>
@@ -78,8 +79,8 @@
             
             <Image></Image>
 
-            <Button Grid.Column="1" Grid.Row="4" Text="Build" Command="{Binding GetImagePreview}"></Button> 
-            
+            <Button Grid.Column="1" Grid.Row="4" Text="Build" Command="{Binding GetImagePreview}"></Button>
+            <Image Grid.Column="1" Grid.ColumnSpan="5" Source="{Binding ImageOut}"></Image>
             
             
         </Grid>
