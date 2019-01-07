@@ -5,7 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SkiaSharp;
+using SkiaSharp.Views.Forms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -70,6 +71,25 @@ namespace XPlatform
             }
         }
 
+
+
+        //ImageOut
+        private ImageSource _ImageOut;
+        public ImageSource ImageOut
+        {
+            get
+            {
+                return _ImageOut;
+            }
+            set
+            {
+                _ImageOut = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ImageOut)));
+            }
+        }
+
+
+
         public Command GetImage1
         {
             get
@@ -103,7 +123,26 @@ namespace XPlatform
                 {
                     //Greate a new image and add the other images if they exist.
                     Image newimage = new Image();
-                    
+                    //var x = new Canvas();
+                    var b = new SKBitmap(1500, 1000, false);
+
+                    using (SKCanvas canvas = new SKCanvas(b))
+                    {
+
+                        StreamImageSource streamImageSource = (StreamImageSource)Image1;
+                        System.Threading.CancellationToken cancellationToken = System.Threading.CancellationToken.None;
+                        var thestream = streamImageSource.Stream(cancellationToken);
+
+                        var dimage = SKBitmap.Decode(thestream.Result);
+                        canvas.DrawBitmap(dimage, new SKPoint(20,20));
+
+                    }
+
+                    //b.(SKImageEncodeFormat.Png, 100);
+
+
+                    //ImageOut = b;
+
 
                 });
             }
